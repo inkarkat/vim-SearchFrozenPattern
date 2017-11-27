@@ -60,7 +60,7 @@ function! s:Freeze( arguments )
     endif
 
     " Integration into SearchRepeat.vim
-    silent! call SearchRepeat#Set("\<Plug>(SearchFrozenPatternNext)", "\<Plug>(SearchFrozenPatternPrev)", 2, {'hlsearch': 0})
+    silent! call SearchRepeat#Set("\<Plug>(SearchFrozenPatternNext)", "\<Plug>(SearchFrozenPatternPrev)", 2, g:SearchFrozenPattern#SearchRepeatOptions)
 
     return 1
 endfunction
