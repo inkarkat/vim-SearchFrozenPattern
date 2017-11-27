@@ -1,0 +1,160 @@
+*SearchFrozenPattern.txt*	Freeze the current search pattern and keep searching for it.
+
+		   SEARCH FROZEN PATTERN    by Ingo Karkat
+						     *SearchFrozenPattern.vim*
+description			|SearchFrozenPattern-description|
+usage				|SearchFrozenPattern-usage|
+installation			|SearchFrozenPattern-installation|
+configuration			|SearchFrozenPattern-configuration|
+integration			|SearchFrozenPattern-integration|
+limitations			|SearchFrozenPattern-limitations|
+known problems			|SearchFrozenPattern-known-problems|
+todo				|SearchFrozenPattern-todo|
+history				|SearchFrozenPattern-history|
+
+==============================================================================
+DESCRIPTION				     *SearchFrozenPattern-description*
+
+Most of the navigation in Vim is done with searches. Often, one even builds
+searches (different branches to search for) by jumping around buffer(s) and
+adding stuff to the current search. For this kind of "meta-searching", it
+would be great if a different search could be used that is not affected by
+changes to the current search pattern.
+
+This plugin provides commands and mappings to "freeze" a search pattern.
+Plugin mappings allow to navigate to next / previous matches of this memorized
+pattern, even if the current search pattern changes. You basically get a
+second set of search navigation mappings that works independently of the
+built-in |n| / |N|. If you use the optional SearchRepeat plugin, its n / N
+overloads can be quickly switched from the frozen pattern to the current one,
+and back.
+
+HOW IT WORKS								     *
+
+The |SearchSpecial.vim| plugin provides custom search capabilities. This
+plugin saves the current / specified search pattern, and feeds that to it. You
+get search navigation that works like the built-in one, but is independent of
+|quote/| and 'hlsearch'.
+
+SEE ALSO								     *
+
+- The |SearchAsQuickJump.vim| plugin (vimscript #5619) allows to perform
+  searches without affecting the current search pattern. Unlike with this
+  plugin, the pattern needs to be input / based on the current word.
+- The |mark.vim| plugin (vimscript #2666) can search for multiple patterns in
+  parallel, using special mappings. It also highlights each pattern in a
+  different way.
+- The |HistoryRecall.vim| plugin (vimscript #0000) has mappings that allow to
+  quickly recall previous search patterns from the search history.
+- The |SearchAlternatives.vim| plugin (vimscript #4146) is a great companion
+  to add branches to the current search pattern. Together with this plugin,
+  you can use a single (frozen) search pattern to locate stuff, and then add
+  selected matches to the current search pattern.
+- Check out the |SearchSpecial.vim| plugin page (vimscript #4948) for a full
+  list of special searches powered by it.
+- Check out the |SearchRepeat.vim| plugin page (vimscript #4949) for a full
+  list of custom searches that integrate with it.
+
+RELATED WORKS								     *
+(Alternatives from other authors, other approaches, references not used here.)
+
+==============================================================================
+USAGE						   *SearchFrozenPattern-usage*
+							       *:SearchFreeze*
+:SearchFreeze [/{pattern}/[{offset}]]
+			Keep searching for {pattern} / the last search pattern
+			(with |gof| / |gOf|) even if the search pattern
+			changes (via any of the built-in search commands like
+			|/|, |star|, etc.) The command jumps to the next
+			occurrence of the pattern.
+								  *<Leader>/f*
+<Leader>/f		Keep searching for the current search pattern
+			(|quote/|) even if the search pattern changes. The
+			mapping does not jump on its own.
+
+The special searches all start with 'go...' (mnemonic: "go once to special
+match"); and come in search forward (go...) and backward (gO...) variants.
+
+								   *gof* *gOf*
+[count]gof / gOf	Search forward / backward to the [count]'th occurrence
+			of the quick search pattern. This is the equivalent to
+			the default |n| / |N| search repeat commands.
+
+EXAMPLE						 *SearchFrozenPattern-example*
+
+==============================================================================
+INSTALLATION				    *SearchFrozenPattern-installation*
+
+The code is hosted in a Git repo at
+    https://github.com/inkarkat/vim-SearchFrozenPattern
+You can use your favorite plugin manager, or "git clone" into a directory used
+for Vim |packages|. Stable releases are on the "master" branch, the latest
+unstable snapshot on "develop".
+
+This script is also packaged as a |vimball|. If you have the "gunzip"
+decompressor in your PATH, simply edit the *.vmb.gz package in Vim; otherwise,
+decompress the archive first, e.g. using WinZip. Inside Vim, install by
+sourcing the vimball or via the |:UseVimball| command. >
+    vim SearchFrozenPattern*.vmb.gz
+    :so %
+To uninstall, use the |:RmVimball| command.
+
+DEPENDENCIES				    *SearchFrozenPattern-dependencies*
+
+- Requires Vim 7.0 or higher.
+- Requires the |SearchSpecial.vim| plugin (vimscript #4948), version 1.20 or
+  higher.
+- SearchRepeat.vim (vimscript #4949) plugin, version 2.00 or higher (optional)
+
+==============================================================================
+CONFIGURATION				   *SearchFrozenPattern-configuration*
+
+For a permanent configuration, put the following commands into your |vimrc|:
+						   *SearchFrozenPattern-remap*
+If you want to use different mappings, map your keys to the
+<Plug>(SearchFrozenPattern...) mapping targets _before_ sourcing the script
+(e.g. in your |vimrc|): >
+    nmap gof <Plug>(SearchFrozenPatternNext)
+    nmap gOf <Plug>(SearchFrozenPatternPrev)
+    nmap <Leader>/f <Plug>(SearchFrozenPatternFreeze)
+<
+==============================================================================
+INTEGRATION				     *SearchFrozenPattern-integration*
+
+If the SearchRepeat plugin is installed, a parallel set of "go now and for
+next searches" mappings (starting with 'gn...' instead of 'go...') is
+installed. These mappings have the same effect, but in addition re-program the
+'n/N' keys to repeat this particular search (until another gn... search is
+used).
+
+==============================================================================
+LIMITATIONS				     *SearchFrozenPattern-limitations*
+
+KNOWN PROBLEMS				  *SearchFrozenPattern-known-problems*
+
+TODO						    *SearchFrozenPattern-todo*
+
+IDEAS						   *SearchFrozenPattern-ideas*
+
+CONTRIBUTING				      *SearchFrozenPattern-contribute*
+
+Report any bugs, send patches, or suggest features via the issue tracker at
+https://github.com/inkarkat/vim-SearchFrozenPattern/issues or email (address
+below).
+
+==============================================================================
+HISTORY						 *SearchFrozenPattern-history*
+
+GOAL
+First published version.
+
+0.01	27-Nov-2017
+Started development.
+
+==============================================================================
+Copyright: (C) 2017 Ingo Karkat
+The VIM LICENSE applies to this plugin; see |copyright|.
+
+Maintainer:	Ingo Karkat <ingo@karkat.de>
+==============================================================================
+ vim:tw=78:ts=8:ft=help:norl:
