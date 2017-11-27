@@ -3,7 +3,6 @@
 " DEPENDENCIES:
 "   - SearchRepeat.vim autoload script
 "   - SearchSpecial.vim autoload script
-"   - SearchSpecial/Offset.vim autoload script
 "   - ingo/cmdargs/pattern.vim autoload script
 "   - ingo/err.vim autoload script
 "   - ingo/escape.vim autoload script
@@ -67,15 +66,7 @@ function! s:Freeze( arguments )
 endfunction
 
 function! s:Search( count, isBackward )
-    let [l:offsetSearchFlags, l:BeforeFirstSearchAction, l:AfterFinalSearchAction] = SearchSpecial#Offset#GetAction(s:offset)
-    return SearchSpecial#SearchWithout(s:pattern, a:isBackward, '', 'frozen', '', a:count,
-    \   {
-    \       'isAutoOffset': 0,
-    \       'additionalSearchFlags': l:offsetSearchFlags,
-    \       'BeforeFirstSearchAction': l:BeforeFirstSearchAction,
-    \       'AfterFinalSearchAction': l:AfterFinalSearchAction,
-    \   }
-    \)
+    return SearchSpecial#SearchWithout(s:pattern, a:isBackward, '', 'frozen', '', a:count, {'searchOffset': s:offset})
 endfunction
 
 " vim: set ts=8 sts=4 sw=4 noexpandtab ff=unix fdm=syntax :
