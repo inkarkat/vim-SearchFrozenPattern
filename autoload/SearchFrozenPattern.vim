@@ -1,11 +1,11 @@
 " SearchFrozenPattern.vim: Freeze the current search pattern and keep searching for it.
 "
 " DEPENDENCIES:
-"   - SearchRepeat.vim autoload script
 "   - SearchSpecial.vim autoload script
 "   - ingo/cmdargs/pattern.vim autoload script
 "   - ingo/err.vim autoload script
 "   - ingo/escape.vim autoload script
+"   - SearchRepeat.vim autoload script (optional integration)
 "
 " Copyright: (C) 2017 Ingo Karkat
 "   The VIM LICENSE applies to this script; see ':help copyright'.
@@ -15,18 +15,18 @@
 let s:pattern = ''
 let s:offset = ''
 
-function! SearchFrozenPattern#Search( count, isBackward )
+function! SearchFrozenPattern#Search( isBackward, count )
     if empty(s:pattern)
 	if ! s:Freeze('')
 	    return 0
 	endif
     endif
 
-    return s:Search(a:count, a:isBackward)
+    return s:Search(a:isBackward, a:count)
 endfunction
 
 function! SearchFrozenPattern#FreezeCommand( arguments )
-    return (s:Freeze(a:arguments) ? s:Search(1, 0) : 0)
+    return (s:Freeze(a:arguments) ? s:Search(0, 1) : 0)
 endfunction
 function! SearchFrozenPattern#FreezeMapping()
     if s:Freeze('')
@@ -65,7 +65,7 @@ function! s:Freeze( arguments )
     return 1
 endfunction
 
-function! s:Search( count, isBackward )
+function! s:Search( isBackward, count)
     return SearchSpecial#SearchWithout(s:pattern, a:isBackward, '', 'frozen', '', a:count, {'searchOffset': s:offset})
 endfunction
 

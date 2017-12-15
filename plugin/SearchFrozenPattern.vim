@@ -26,8 +26,8 @@ command! -nargs=? SearchFreeze if ! SearchFrozenPattern#FreezeCommand(<q-args>) 
 
 "- mappings --------------------------------------------------------------------
 
-nnoremap <silent> <Plug>(SearchFrozenPatternNext) :<C-u>if ! SearchFrozenPattern#Search(v:count1, 0)<Bar>echoerr ingo#err#Get()<Bar>endif<CR>
-nnoremap <silent> <Plug>(SearchFrozenPatternPrev) :<C-u>if ! SearchFrozenPattern#Search(v:count1, 1)<Bar>echoerr ingo#err#Get()<Bar>endif<CR>
+nnoremap <silent> <Plug>(SearchFrozenPatternNext) :<C-u>if ! SearchFrozenPattern#Search(0, v:count1)<Bar>echoerr ingo#err#Get()<Bar>endif<CR>
+nnoremap <silent> <Plug>(SearchFrozenPatternPrev) :<C-u>if ! SearchFrozenPattern#Search(1, v:count1)<Bar>echoerr ingo#err#Get()<Bar>endif<CR>
 if ! hasmapto('<Plug>(SearchFrozenPatternNext)', 'n')
     nmap gof <Plug>(SearchFrozenPatternNext)
 endif
