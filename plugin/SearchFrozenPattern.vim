@@ -49,7 +49,8 @@ try
     call SearchRepeat#Define(
     \	'<Plug>(SearchFrozenPatternNext)', '<Plug>(SearchFrozenPatternPrev)',
     \   '<Leader>/f', 'f', 'frozen', 'Freeze current search pattern', ':SearchFreeze [/{pattern}/[{offset}]]',
-    \	"2, g:SearchFrozenPattern#SearchRepeatOptions"
+    \	2,
+    \   g:SearchFrozenPattern#SearchRepeatOptions
     \)
 catch /^Vim\%((\a\+)\)\=:E117:/	" catch error E117: Unknown function
 endtry
